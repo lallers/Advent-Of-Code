@@ -1,0 +1,147 @@
+<html>
+
+<head>
+    <title>Advent of Code 2018</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        .box {
+            border: 1px;
+            border-style: dotted;
+            min-height: 100px
+        }
+    </style>
+</head>
+
+<body>
+
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" id="day_01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Day 01</a>
+                <div class="dropdown-menu" aria-labelledby="day_01">
+                    <a class="dropdown-item get-data" id="Day_01_Chronal_Calibration_a" href="#">Part A</a>
+                    <a class="dropdown-item get-data" id="Day_01_Chronal_Calibration_b" href="#">Part B</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" id="day_02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Day 02</a>
+                <div class="dropdown-menu" aria-labelledby="day_02">
+                    <a class="dropdown-item get-data" id="Day_02_Inventory_Management_System_a" href="#">Part A</a>
+                    <a class="dropdown-item get-data" id="Day_02_Inventory_Management_System_b" href="#">Part B</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#" id="Day_03_No_Matter_a">Day 03</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#" id="Day_04_Repose_Record">Day 04</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 05</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 06</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 07</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 08</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 09</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 10</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 11</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 12</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 13</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 14</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 15</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 16</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 17</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 18</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 19</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 20</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 21</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 22</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 23</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 24</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link get-data" href="#">Day 25</a>
+        </li>
+    </ul>
+    <div class="display-single box">
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/d3js/5.7.0/d3.min.js"></script>
+    <script>
+        $(document).ready(() => {
+
+            $('.get-data').click((e) => {
+                var run_code = e.target.id
+                var display_in = $(".display-single")
+                if (run_code) {
+                    run_code += ".php"
+                    $.ajax({
+                        type: "POST",
+                        url: run_code,
+                        data: {},
+                        beforeSend: (xhr) => {
+                            console.log("RUN\n" + run_code)
+                            display_in.empty()
+                            display_in.removeClass("loading")
+                            display_in.addClass("loading")
+                        }
+                    }).done((output, status) => {
+                        display_in.removeClass("loading")
+                        display_in.html(output)
+                    });
+                }
+
+            });
+
+            /*$(".nav-item").click((e) => {
+                  $(".nav-item").removeClass("active")
+                  $(this).addClass("active")
+              })*/
+        })
+    </script>
+</body>
+
+</html>
