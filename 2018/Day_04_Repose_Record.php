@@ -11,9 +11,14 @@ $guard_data = check_asleep_total($guard_data);
 
 $bad_elf = most_minutes_slept($guard_data);
 
-echo ("Most minutes slept by Guard <b>" . $bad_elf[0] . "</b> with <b>" . $bad_elf[1] . "</b> minutes slept... The longest duration started at minute <b>" . $bad_elf[2] . "</b>! <br>");
+$baddest_elf = frequency_of_sleep($guard_data);
 
-echo ("Result: <b>" . $bad_elf[3] . "</b>");
+echo ("Most minutes slept by Guard <b>" . $bad_elf[0] . "</b> with <b>" . $bad_elf[1] . "</b> minutes slept... The longest duration started at minute <b>" . $bad_elf[2] . "</b>! <br>");
+echo ("Result A: <b>" . $bad_elf[3] . "</b><br>");
+echo("<br>");
+echo ("Frequency of minute slept by Guard <b>" . $baddest_elf[0] . "</b>, sleeping <b>" . $baddest_elf[1] . "</b> times during the <b>". $baddest_elf[2]."</b> minute<br>");
+echo ("Result B: <b>" . $baddest_elf[3] . "</b><br>");
+
 
 function setup_data($data)
 {
@@ -81,13 +86,13 @@ function is_asleep($item)
 
 function check_asleep_total($guards)
 {
-    
+
     foreach ($guards as $guard_key => $guard) {
         $start_sleep = 0;
         $sleep_end = 0;
         $most_minutes = 0;
         $ppp_sleep = false;
-        $working_period=array_fill(0,59,0);
+        $working_period = array_fill(0, 60, 0);
         foreach ($guard['details'] as $detail_key => $detail) {
             if (is_asleep($detail)) {
                 $start_sleep = get_timestamp($detail, true);
@@ -97,10 +102,12 @@ function check_asleep_total($guards)
                     echo ("SOMETHING WRONG<br>");
                 } else ($ppp_sleep = false);
                 $sleep_end = get_timestamp($detail, true);
+                #echo("<br>".$sleep_end);
                 $total_sleep = $sleep_end - $start_sleep;
-                for($i=$start_sleep;$i<$sleep_end;$i++){
-                
-                    $working_period[$i]+=1;
+
+                for ($i = $start_sleep; $i < $sleep_end+1; $i++) {
+
+                    $working_period[$i] += 1;
                 }
                 #echo ($guard_key . ' ' . $start_sleep . " -> " . $sleep_end . " = " . $total_sleep . "<br>");
                 #if ($total_sleep > $most_minutes) {
@@ -110,7 +117,7 @@ function check_asleep_total($guards)
                 $guards[$guard_key]["asleep_for"][] = $total_sleep;
             }
         }
-        
+
         $max_times_minute = array_keys($working_period, max($working_period));
         $max_times_minute = $max_times_minute[0];
         /* FOR PART B */
@@ -143,6 +150,30 @@ function most_minutes_slept($guards)
         }
 
     }
+    return $result;
+}
+
+function frequency_of_sleep($guards)
+{
+    $result = ["Guard", 0, 0, 0];
+    $most_mins = 0;
+    foreach ($guards as $guard_key => $guard) {
+        $freq = $guards[$guard_key]["most_frequent_slept"];
+        
+        $guard_id = (int)str_replace("Guard", "", $guard_key);
+        $max = max($freq);
+        
+        $most_mins_g = array_keys($freq, $max);
+        
+        $most_mins_g = $most_mins_g[0];
+        
+        if ($max > $most_mins) {
+            $most_mins = $max;
+            $out = $most_mins_g * $guard_id;
+            $result = [$guard_id,$max, $most_mins_g, $out];
+        }
+    }
+    
     return $result;
 }
 

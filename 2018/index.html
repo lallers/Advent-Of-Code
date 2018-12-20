@@ -40,7 +40,13 @@
             <a class="nav-link get-data" href="#" id="Day_04_Repose_Record">Day 04</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link get-data" href="#">Day 05</a>
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" id="day_05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Day 05</a>
+                <div class="dropdown-menu" aria-labelledby="day_02">
+                    <a class="dropdown-item get-data" id="Day_05_Alchemical_Reduction" value="a" href="#">Part A</a>
+                    <a class="dropdown-item get-data" id="Day_05_Alchemical_Reduction" value="b" href="#">Part B</a>
+                </div>
+            </div>
         </li>
         <li class="nav-item">
             <a class="nav-link get-data" href="#">Day 06</a>
@@ -116,12 +122,17 @@
             $('.get-data').click((e) => {
                 var run_code = e.target.id
                 var display_in = $(".display-single")
+                var val = $(e.target).attr("value");
+                if(!val){
+                    val = "";
+                }
+                
                 if (run_code) {
                     run_code += ".php"
                     $.ajax({
                         type: "POST",
+                        data:{action:val},
                         url: run_code,
-                        data: {},
                         beforeSend: (xhr) => {
                             console.log("RUN\n" + run_code)
                             display_in.empty()
